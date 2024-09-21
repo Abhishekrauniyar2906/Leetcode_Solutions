@@ -1,24 +1,29 @@
 class Solution {
 public:
+     double slidingwindow(vector<int>& nums, int k){
+          // int maxSum = INT_MIN;
+         int i = 0;
+         int j = k - 1;
+         int sum = 0;
+         int maxSum = 0;
+      
+         for(int y = i; y <= j; ++y)
+            sum = sum + nums[y];
+             maxSum = sum;
+             j++;
+         
+           
+         while(j < nums.size()){
+          sum = sum - nums[i++];
+             sum = sum + nums[j++];
+        maxSum = max(maxSum, sum);
+             
+         }
+         double maxAvg = maxSum / (double)k;
+         return maxAvg;
+     }
+    
     double findMaxAverage(vector<int>& nums, int k) {
-     
-        int n = nums.size();
-    
-    // Calculate the sum of the first k elements
-    double sum = 0;
-    for(int i = 0; i < k; i++) {
-        sum += nums[i];
-    }
-
-   
-    double maxAvg = sum / k;
-    
-    
-    for(int i = k; i < n; i++) {
-        sum += nums[i] - nums[i - k];  
-        maxAvg = std::max(maxAvg, sum / k);  
-    }
-    
-    return maxAvg;
+        return slidingwindow(nums,k);
     }
 };
