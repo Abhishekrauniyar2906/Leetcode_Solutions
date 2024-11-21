@@ -2,54 +2,23 @@ class Solution {
 public:
   
   void Merge(vector<int> &nums, int start, int end){
-       int mid = start + (end - start) / 2;
-      int left_len = mid - start + 1;
-      int right_len = end - mid;
+      int totalsize = end - start + 1;
+    int gap = (totalsize / 2) + (totalsize % 2);
       
-      int *left = new int[left_len];
-      int *right = new int[right_len];
     
-      int k = start;
-      for(int i = 0;i < left_len; i++){
-        left[i] = nums[k];
-        k++;
+    while(gap > 0){
+      int i = start;
+      int j = i + gap;
+      while(j <= end){
+      if(nums[i] > nums[j]){
+ 
+          swap(nums[i], nums[j]);     
       }
-    
-    for(int i = 0; i < right_len; i++){
-      right[i] = nums[k];
-      k++;
-    }
-    
-    int leftIndex = 0;
-    int rightIndex = 0;
-    int main_array = start;
-    
-    while(leftIndex < left_len && rightIndex < right_len){
-      if(left[leftIndex] < right[rightIndex]){
-        nums[main_array] = left[leftIndex];
-        main_array++;
-        leftIndex++;
+        i++; 
+        j++;
       }
-      else{
-        nums[main_array] = right[rightIndex];
-        main_array++;
-        rightIndex++;
-      }
-      
-     }
-    
-    while(leftIndex < left_len){
-      nums[main_array] = left[leftIndex];
-      main_array++;
-      leftIndex++;
+     gap = gap <= 1 ? 0 : (gap / 2) + (gap % 2);
     }
-    while(rightIndex < right_len){
-      nums[main_array] = right[rightIndex];
-      main_array++;
-      rightIndex++;
-    }
-        delete []left;
-        delete []right;
   }
    void MergeSort(vector<int> &nums, int start, int end){
      if(start >= end){
