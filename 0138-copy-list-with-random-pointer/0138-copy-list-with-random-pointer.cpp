@@ -1,54 +1,35 @@
 class Solution {
 public:
-
-    void insertAtTail(Node*& head, Node*& tail, int val) {
-        Node* newNode = new Node(val);
-        if (head == NULL) {
-            head = newNode;
-            tail = newNode;
-        } else {
-            tail->next = newNode;
-            tail = newNode;
-        }
-    }
-
     Node* copyRandomList(Node* head) {
-        if (!head) {
-            return NULL; // Handle empty list
-        }
-
-        // Step 1: Create a clone list
-        Node* cloneHead = NULL;
-        Node* cloneTail = NULL;
+        if (!head) return NULL;
 
         Node* temp = head;
         while (temp != NULL) {
-            insertAtTail(cloneHead, cloneTail, temp->val);
-            temp = temp->next;
+            Node* newNode = new Node(temp->val);
+            newNode->next = temp->next;
+            temp->next = newNode;
+            temp = newNode->next;
         }
 
-        // Step 2: Create a mapping between original and cloned nodes
-        unordered_map<Node*, Node*> mapping;
-        Node* originalNode = head;
-        Node* cloneNode = cloneHead;
-
-        while (originalNode != NULL) {
-            mapping[originalNode] = cloneNode;
-            originalNode = originalNode->next;
-            cloneNode = cloneNode->next;
-        }
-
-        // Step 3: Set up random pointers in the clone list
-        originalNode = head;
-        cloneNode = cloneHead;
-
-        while (originalNode != NULL) {
-            if (originalNode->random) {
-                cloneNode->random = mapping[originalNode->random];
-            } else {
-                cloneNode->random = NULL;
+        temp = head;
+        while (temp != NULL) {
+            if (temp->random != NULL) {
+                temp->next->random = temp->random->next;
             }
+            temp = temp->next->next;
+        }
+
+        Node* originalNode = head;
+        Node* cloneNode = head->next;
+        Node* cloneHead = cloneNode;
+
+        while (originalNode != NULL && cloneNode != NULL) {
+            originalNode->next = cloneNode->next;
             originalNode = originalNode->next;
+
+            if (originalNode != NULL) {
+                cloneNode->next = originalNode->next;
+            }
             cloneNode = cloneNode->next;
         }
 
