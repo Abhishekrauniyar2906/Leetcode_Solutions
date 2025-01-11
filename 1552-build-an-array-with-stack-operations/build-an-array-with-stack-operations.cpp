@@ -1,17 +1,30 @@
 class Solution {
 public:
     vector<string> buildArray(vector<int>& target, int n) {
-    unordered_set<int> target_set(target.begin(), target.end());
-       vector<string> result;
+     vector<string>ans;
+        int j=0;
+        int i=1;
+        while(j!=target.size())
+        {
+            ans.push_back("Push");
 
-        for (int i = 1; i <= target.back(); ++i) {
-            if (target_set.find(i) != target_set.end()) {
-                result.push_back("Push");
-            } else {
-                result.push_back("Push");
-                result.push_back("Pop");
+            if(i==target[j])
+            {
+                
+                j++;
+                
             }
+            else
+            {
+                ans.push_back("Pop");
+            }
+            i++;
+
+
         }
-        return result;    
+
+
+     return ans;
+
     }
 };
