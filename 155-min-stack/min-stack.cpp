@@ -4,6 +4,7 @@ public:
      vector<pair<int,int>> st;
     MinStack() {
         // No need to define any value
+        
     }
     
     void push(int val) {
