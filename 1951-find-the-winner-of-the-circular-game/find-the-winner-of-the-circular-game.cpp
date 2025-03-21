@@ -1,27 +1,26 @@
 class Solution {
 public:
+
+ 
     int findTheWinner(int n, int k) {
-        
-        //  all palyers should go into a queue
-        queue<int>q;
+         queue<int>q;
 
-        for(int i = 1; i <= n; i++){
+    //  Initially (means push all the players in the game i mean queue)
+         for(int i = 1; i <= n; i++){
+            q.push(i);
+         }
 
-             q.push(i);
-        }
 
-        while(q.size() != 1){
-            // Simualte the game 
+         while(q.size() != 1){
             for(int i = 1; i < k; i++){
-            int player = q.front();
+                int front = q.front();
+                q.pop();
+                q.push(front);
+            }
             q.pop();
-            // it is not eliminated yet
-            q.push(player);
-        }
-        // kth player must be eliminated
-        q.pop();
-        }
-        // winner
-        return q.front(); 
+         }
+
+         return q.front();
     }
+
 };
