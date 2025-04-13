@@ -25,12 +25,10 @@ public:
             }
         }
 
-        for (auto& it: mp) {
-             auto &colMap= it.second;
+        for (auto& [col, rows] : mp) {
             vector<int> vertical;
-            for (auto& colMapit : colMap) {
-                auto &mset = colMapit.second;
-                vertical.insert(vertical.end(), mset.begin(), mset.end());
+            for (auto& [row, nodes] : rows) {
+                vertical.insert(vertical.end(), nodes.begin(), nodes.end());
             }
             ans.push_back(vertical);
         }
