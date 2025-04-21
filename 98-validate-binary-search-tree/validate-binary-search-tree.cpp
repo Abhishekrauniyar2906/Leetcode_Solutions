@@ -1,20 +1,25 @@
+
 class Solution {
 public:
-    bool check(TreeNode* root,long lowerbound,long upperbound){
-        if(root==NULL){
+       
+    bool isvalidBST(TreeNode* root, long long lowerbound, long long upperbound){
+        if(!root){
             return true;
         }
-        if(root->val <= lowerbound || root->val >= upperbound){
-            return false;
-        }
-        bool left = check(root->left,lowerbound,(root->val));
-        bool right = check(root->right,(root->val),upperbound);
-        bool ans = left && right;
-        return ans;
+
+
+     bool cond1 = (root -> val > lowerbound && root -> val < upperbound);
+
+     bool cond2 = (isvalidBST(root -> left, lowerbound, root -> val) && isvalidBST(root -> right, root -> val, upperbound));
+
+
+     return cond1 && cond2;
     }
+   
     bool isValidBST(TreeNode* root) {
-        long lowerbound = LONG_MIN;
-        long upperbound = LONG_MAX;
-        return check(root,lowerbound,upperbound);
+        
+     bool ans = isvalidBST(root, LLONG_MIN, LLONG_MAX);
+
+     return ans;
     }
 };
