@@ -11,8 +11,8 @@ public:
            while(k--){
             int element = pq.top();
             pq.pop();
-            int maxi = ceil(element / 2.0);
-            pq.push(maxi);
+            element = element - element / 2;
+            pq.push(element);
             
            }
         int ans = 0;
