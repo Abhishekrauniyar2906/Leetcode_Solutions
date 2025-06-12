@@ -1,70 +1,41 @@
 class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-        int i = 0;
-      int j = 0;
-      int k = 0;
-      int n = nums1.size();
-      int m = nums2.size();
-      int size = (m + n );
+      if(nums1.size() > nums2.size()){
+        return findMedianSortedArrays(nums2,nums1);
+      }
 
-      int idx1 = (size / 2) - 1;
-      int idx2 = size / 2;
+      int m = nums1.size();
+      int n = nums2.size();
 
-      int element1 = -1;
-      int element2 = -1;
+      int s = 0;
+      int e = m;
 
-      while(i < nums1.size() && j < nums2.size()){
-        if(nums1[i] <= nums2[j]){
-          if(idx1 == k){
-            element1 = nums1[i];
+      while(s <= e){
+        int Px = s + (e - s) / 2; // from nums1
+        int Py = (m + n + 1) / 2 - Px;  // From nums2
+
+        int x1 = (Px == 0) ? INT_MIN : nums1[Px - 1];
+        int x2 = (Py == 0) ? INT_MIN : nums2[Py - 1];
+        int x3 = (Px == m) ? INT_MAX : nums1[Px];
+        int x4 = (Py == n) ? INT_MAX : nums2[Py];
+
+        if(x1 <= x4 && x2 <= x3){
+          if((m + n) % 2 == 1){
+            return max(x1,x2);
           }
-          if(idx2 == k){
-            element2 = nums1[i];
+          else{
+            return (max(x1,x2) + min(x3,x4)) / 2.0;
           }
-          i++;
+        }
+
+        else if(x1 > x4){
+          e = Px - 1;
         }
         else{
-          if(idx1 == k){
-            element1 = nums2[j];
-          }
-          if(idx2 == k){
-            element2 = nums2[j];
-          }
-          j++;
+          s = Px + 1;
         }
-        k++;
       }
-
-      while(i < nums1.size()){
-        if(idx1 == k){
-          element1 = nums1[i];
-          
-        }
-        if(idx2 == k){
-          element2 = nums1[i];
-        }
-        i++;
-        k++;
-      }
-
-      while(j < nums2.size()){
-        if(idx1 == k){
-          element1 = nums2[j];
-          
-        }
-        if(idx2 == k){
-          element2 = nums2[j];
-        }
-        j++;
-        k++;
-      }
-
-
-      if(size % 2 == 1){
-        return element2;
-      }
-
-      return (element1 + element2) / 2.0;
+      return -1;
     }
 };
