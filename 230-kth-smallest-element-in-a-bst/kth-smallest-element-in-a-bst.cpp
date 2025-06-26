@@ -1,30 +1,24 @@
 
 class Solution {
 public:
+   int result = -1;
+   int count = 0;
+    void inorder(TreeNode* root, int k){
+      if(!root || result != -1) return;
+      
+      inorder(root -> left, k);
+      count++;
+
+      if(count == k){
+        result = root -> val;
+        return;
+      }
+
+      inorder(root -> right, k);
+    }
     int kthSmallest(TreeNode* root, int k) {
         
-        if(!root){
-            return -1;
-        }
-
-        stack<TreeNode*>st;
-         
-         while(true){
-         while(root){
-            st.push(root);
-            root = root -> left;
-         }
-
-           root = st.top();
-           st.pop();
-          k--;
-           if(k == 0){
-            return root -> val;
-           }
-
-            root = root -> right;
-         }
-
+        inorder(root,k);
+        return result;
     }
-
 };
