@@ -1,25 +1,23 @@
 class Solution {
 public:
-    int solveUsingTopDown(int n, vector<int> &dp){
+    int solveUsingTopDown(int n){
+      if(n == 0 || n == 1) return n;
+     int prev = 0;
+     int curr = 1;
       
-     dp[0] = 0;
-     if(n == 0){
-        return 0;
-      }
-      if(n == 1) return 1;
-     dp[1] = 1;
-      // return the ans which is the valid answer not exists
       
-     // store the ans in dp
+     int ans;
      for(int i = 2; i <= n; i++){
-     dp[i] = dp[i-1] + dp[i - 2];
+      ans = prev + curr;
+      prev = curr ;
+      curr = ans;
      }
-     return dp[n];
+     return ans;
     }
     int fib(int n) {
-        // using top down
-        vector<int>dp(n + 1, -1);
-        int ans = solveUsingTopDown(n, dp);
+       
+        
+        int ans = solveUsingTopDown(n);
         return ans;
     }
 };
