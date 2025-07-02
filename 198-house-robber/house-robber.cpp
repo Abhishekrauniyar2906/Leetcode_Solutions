@@ -1,24 +1,26 @@
 class Solution {
 public:
-   int house(vector<int>& nums, int i, vector<int> &dp){
-    if(i >= nums.size()){
-      return 0;
+    
+    int robber(vector<int> &nums, vector<int> &dp, int i){
+      int n = nums.size();
+      if(n == 0) return 0;
+      if(n == 1) return nums[0];
+
+      dp[0] = nums[0];
+      dp[1] = max(nums[0], nums[1]);
+
+      for(int i = 2; i < n; i++){
+        int rob = nums[i] + dp[i - 2];
+        int skip = dp[i - 1];
+
+        dp[i] = max(rob, skip);
+      }
+
+      return dp[n - 1]; // max store in the last house
     }
-     
-     if(dp[i] != -1){
-      return dp[i];
-     }
-
-     int rob = nums[i] + house(nums, i + 2, dp);
-     int skip = house(nums, i + 1, dp);
-
-     return dp[i] = max(rob, skip);
-
-   }
     int rob(vector<int>& nums) {
-        int n = nums.size();
-        vector<int>dp(n, -1);
-        // 0 is a index 
-        return house(nums, 0, dp);
+        vector<int>dp(nums.size(), -1);
+        int ans = robber(nums, dp, 0);
+        return ans;
     }
 };
