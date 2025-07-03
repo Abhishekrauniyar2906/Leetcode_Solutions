@@ -1,43 +1,41 @@
 class Solution {
 public:
     vector<string> reorderLogFiles(vector<string>& logs) {
+     vector<string> digitsLogs;
+     vector<string> lettersLogs;
 
-        vector<string>digitLogs;
-        vector<string>letterLogs;
+     for(auto log : logs){
+      int pos = log.find(' ');
+      string content = log.substr(pos + 1);
 
-        for(auto log : logs){
-          int pos = log.find(' ');
-          string content = log.substr(pos + 1);
+      if(isdigit(content[0])){
+        digitsLogs.push_back(log);
+      }
+      else{
+        lettersLogs.push_back(log);
+      }
+     }
 
-          if(isdigit(content[0])){
-            digitLogs.push_back(log);
-          }
-          else{
-            letterLogs.push_back(log);
-          }
-        }
-        
-        sort(letterLogs.begin(), letterLogs.end(), [](string &a, string &b){
-          int posA = a.find(' ');
-          int posB = b.find(' ');
+     sort(lettersLogs.begin(), lettersLogs.end(), [](string &a, string &b){
+       int posA = a.find(' ');
+       int posB = b.find(' ');
 
+       string identifierA = a.substr(0, posA);
+       string contentA = a.substr(posA + 1);
 
-          string identifierA = a.substr(0, posA);
-          string contentA = a.substr(posA + 1);
+       string identifierB = b.substr(0, posB);
+       string contentB = b.substr(posB + 1);
 
-          string identifierB = b.substr(0, posB);
-          string contentB = b.substr(posB + 1);
+       if(contentA == contentB){
+        return identifierA < identifierB;
+       }
+       else{
+        return contentA < contentB;
+       }
+     });   
 
-          if(contentA == contentB)
-            return identifierA < identifierB;
-            return contentA < contentB;
-          
-        });
+     lettersLogs.insert(lettersLogs.end(), digitsLogs.begin(), digitsLogs.end());
 
-        letterLogs.insert(letterLogs.end(), digitLogs.begin(), digitLogs.end());
-         
-         return letterLogs;
-
-        
+     return lettersLogs;
     }
 };
