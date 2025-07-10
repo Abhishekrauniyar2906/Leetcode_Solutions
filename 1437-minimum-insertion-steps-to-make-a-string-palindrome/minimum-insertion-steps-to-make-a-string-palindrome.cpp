@@ -1,7 +1,7 @@
 class Solution {
 public:
-    int minInsertions(string s) {
-        int n = s.size();
+   int solve(string &s){
+         int n = s.size();
         string b = s;
         reverse(b.begin(), b.end());
 
@@ -26,6 +26,9 @@ public:
             }
         }
 
-        return n - dp[n][n];
+        return dp[n][n];
+   }
+    int minInsertions(string s) {
+        return s.size() - solve(s);
     }
 };
