@@ -1,30 +1,23 @@
 
 class Solution {
 public:
-
-   pair<int,int> diameter(TreeNode* root){
-     if(!root){
+   
+    pair<int, int> solve(TreeNode* root){
+      if(!root){
         pair<int,int> p = make_pair(0, 0);
         return p;
-     }
-      
-      pair<int,int>left = diameter(root -> left);
-      pair<int,int> right = diameter(root -> right);
+      }
 
-      int op1 = left.first;
-      int op2 = right.first;
-      int op3 = left.second + right.second ;
+      auto l = solve(root -> left);
+      auto r = solve(root -> right);
 
-      pair<int,int>ans;
-      ans.first = max(op1, max(op2, op3));
-      ans.second = max(left.second, right.second) + 1 ;
+      int h = max(l.first , r.first) + 1;
+      int temp = l.first + r.first;
+      int d = max({l.second, r.second,  temp});
 
-      return ans;
-
-
-
-   }
+      return {h, d};
+    }
     int diameterOfBinaryTree(TreeNode* root) {
-        return diameter(root).first;
+       return solve(root).second;
     }
 };
