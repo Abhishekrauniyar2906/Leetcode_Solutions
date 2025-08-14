@@ -1,43 +1,39 @@
 class Solution {
 public:
-    bool search(vector<int>& nums, int k) {
+    bool search(vector<int>& nums, int target) {
+        int s = 0;
+        int e = nums.size() - 1;
 
-      int l = 0;
-      int r = nums.size() - 1;
+        while(s <= e) {
+          int mid = s + (e - s) / 2;
 
-      while(l <= r){
+          if(nums[mid] == target){
+            return true;
+          }
 
-        int mid = l + (r - l) / 2;
-        if(nums[mid] == k){
-          return true;
-        }
-        if(nums[l] == nums[mid] && nums[mid] == nums[r]){
-          l++;
-          r--;
-        }
+          if(nums[s] == nums[mid] && nums[mid] == nums[e]){
+            s++;
+            e--;
+          }
 
-        // if the left part is sorted
-        else if(nums[l] <= nums[mid]){
-          if(nums[l] <= k && k < nums[mid]){
-            r = mid - 1;
+          // if the left part is sorted
+          else if(nums[s] <= nums[mid]){
+            if(nums[s] <= target && target < nums[mid]){
+              e = mid - 1;
+            }
+            else{
+              s = mid + 1;
+            }
           }
           else{
-            l = mid + 1;
+            if(nums[mid] < target && target <= nums[e]){
+              s = mid + 1;
+            }
+            else{
+              e = mid - 1;
+            }
           }
         }
-
-        // if the right part is sorted
-
-        else{
-          if(nums[mid] < k && k <= nums[r]){
-            l = mid + 1;
-          }
-          else{
-            r = mid - 1;
-          }
-        }
-      }
-
-      return false;
+        return false;
     }
 };
