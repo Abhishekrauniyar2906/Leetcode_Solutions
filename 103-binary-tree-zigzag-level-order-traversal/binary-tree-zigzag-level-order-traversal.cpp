@@ -1,53 +1,38 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+
+
 class Solution {
 public:
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
-        vector<vector<int>> result;
-         
-         if(!root){
-            return result;
-         }
-        queue<TreeNode*>q;
-        q.push(root);
-        
-        bool LtoRdir = true;
+     vector<vector<int>> ans;
 
+     if(!root) return ans;
 
-        while(!q.empty()){
-            int levelsize = q.size();
-            vector<int> ans(levelsize);
+     queue<TreeNode*>q;
+     q.push(root);
 
-            for(int i = 0; i < levelsize; i++){
-                TreeNode* front = q.front();
-                q.pop();
+     bool LeftToRight = true;
 
-             int index = LtoRdir ? i : levelsize - i - 1;
+     while(!q.empty()){
+      int levelsize = q.size();
+      vector<int>levelAns(levelsize);
 
-             ans[index] = front -> val;
+      for(int i = 0; i < levelsize; i++){
+        TreeNode* front = q.front();
+        q.pop();
+        int index = LeftToRight ? i : levelsize - i - 1;
 
-             if(front -> left){
-                q.push(front -> left);
-             }
-
-             if(front -> right){
-                q.push(front -> right);
-             }
-             
-            }
-              
-                 result.push_back(ans);
-             LtoRdir = !LtoRdir;
+        levelAns[index] = front -> val;
+        if(front -> left != NULL){
+          q.push(front -> left);
         }
-              return result;
+
+        if(front -> right != NULL){
+          q.push(front -> right);
+        }
+       }
+       ans.push_back(levelAns);
+       LeftToRight = !LeftToRight;
+     }
+     return ans;
     }
 };
