@@ -1,40 +1,34 @@
+
 class Solution {
 public:
-    int length(ListNode* &head){
-        int count = 0;
-        ListNode* temp = head;
-        while (temp != NULL) {
-            count++;
-            temp = temp->next;
-        }
-        return count;
+    
+    int length(ListNode* head){
+      ListNode* temp = head;
+      int count = 0;
+      while(temp != NULL){
+        count++;
+        temp = temp -> next;
+      }
+      return count;
     }
 
-    TreeNode* solve(ListNode* &head, int n){
-        if (n <= 0 || head == NULL) {
-            return NULL;
-        }
+    TreeNode* bst(ListNode* &head, int len){
+      if(len <= 0 || !head) return NULL;
 
-        // Left subtree
-        TreeNode* leftSubtree = solve(head, n / 2);
+      TreeNode* leftSubTree = bst(head, len / 2);
 
-        // Root node
-        TreeNode* root = new TreeNode(head->val);
+      TreeNode* root = new TreeNode(head -> val);
+      root -> left = leftSubTree;
+      head = head -> next;
+      
+      TreeNode* rightSubTree = bst(head, len - len / 2 - 1);
+      root -> right = rightSubTree;
 
-        // Move to the next node in the list
-        head = head->next;
-
-        // Right subtree
-        TreeNode* rightSubtree = solve(head, n - n / 2 - 1);
-
-        root->left = leftSubtree;
-        root->right = rightSubtree;
-
-        return root;
+      return root;
     }
-
     TreeNode* sortedListToBST(ListNode* head) {
-        int n = length(head);
-        return solve(head, n);
-    }
+      int len = length(head);
+
+      return bst(head, len);   
+}
 };
