@@ -1,25 +1,21 @@
 
 class Solution {
 public:
+   
+    TreeNode* solve(vector<int> &preorder, int &i, long long upperBound){
+     if(i == preorder.size() || preorder[i] > upperBound) return NULL;
 
-  TreeNode* createBST(vector<int>&preorder, int lowerbound, int upperbound, int &i){
-       if(i >= preorder.size()){
-        return NULL;
-       }
-        TreeNode* root = NULL;
-       if(preorder[i] > lowerbound && preorder[i] < upperbound){
-         root = new TreeNode(preorder[i++]);
-
-         root -> left = createBST(preorder, lowerbound, root -> val, i);
-         root -> right = createBST(preorder, root -> val, upperbound, i);
-       }
-       return root;
-   }
+     TreeNode* root = new TreeNode(preorder[i++]);
+      
+      root -> left = solve(preorder, i, root -> val);
+      root -> right = solve(preorder, i, upperBound);
+      return root;
+      
+    }
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-        int lowerbound = INT_MIN;
-        int upperbound = INT_MAX;
-         int i = 0;
-       return createBST(preorder, lowerbound, upperbound, i);
-       
+      int i = 0;
+      return  solve(preorder, i, LLONG_MAX);
+      
+
     }
 };
