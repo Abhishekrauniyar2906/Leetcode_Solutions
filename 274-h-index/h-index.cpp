@@ -1,29 +1,17 @@
 class Solution {
 public:
     int hIndex(vector<int>& citations) {
-        int s = 0;
-        int e = citations.empty() ? 0 : *max_element(citations.begin(), citations.end());
-        
-        int ans = -1;
-        while(s <= e){
-          int mid = s + (e - s) / 2;
-
+         sort(citations.rbegin(), citations.rend());
           int count = 0;
-          
-          for(auto &paper : citations){
-            if(paper >= mid){
-              count++;
-            }
-          }
-
-          if(count >= mid){
-            ans = mid;
-            s = mid + 1;
+        for(int i = 0; i < citations.size(); i++){
+          if(citations[i] >= i + 1){
+            count++;
           }
           else{
-            e = mid - 1;
+            break;
           }
         }
-        return ans;
+
+        return count;
     }
 };
