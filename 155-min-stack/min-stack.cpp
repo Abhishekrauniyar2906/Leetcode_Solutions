@@ -1,43 +1,41 @@
 class MinStack {
 public:
-
-     vector<pair<int,int>> st;
+    
+    vector<pair<int,int>> st;
     MinStack() {
-        // No need to define any value
         
     }
     
-    void push(int val) {
-        // No overflow conditoins right here , because of vector
-        if(st.empty()){
-            pair<int,int> p;
-            p.first = val;
-            p.second = val;
-            st.push_back(p);
-        }
-        else{
-              pair<int,int> p;
-            p.first = val;
-            int oldValue = st.back().second;
-            int newValue = min(oldValue, val);
-            p.second = newValue;
-            st.push_back(p);
-        }
+    void push(int value) {
+       if(st.empty()){
+        pair<int,int> p;
+        p.first = value;
+        p.second = value;
+        st.push_back(p);
+       }
+       else{
+        pair<int,int> p;
+        p.first = value;
+        int oldvalue = st.back().second;
+        int newValue = min(oldvalue, value);
+        p.second = newValue;
+        st.push_back(p);
+       }
+        
     }
     
     void pop() {
-        return st.pop_back();
+      return st.pop_back();
     }
     
     int top() {
-        pair<int,int> rightMostpair = st.back();
-        return rightMostpair.first;
+      pair<int,int>rightmostpair = st.back();
+      return rightmostpair.first;
     }
     
     int getMin() {
-        pair<int,int>rightMostpair = st.back();
-        return rightMostpair.second;
-
+         pair<int,int>rightmostpair = st.back();
+      return rightmostpair.second;
     }
 };
 
