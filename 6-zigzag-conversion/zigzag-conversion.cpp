@@ -1,40 +1,32 @@
 class Solution {
 public:
     string convert(string s, int numRows) {
-        if(numRows == 1 || s.length() <= numRows){
+        if(numRows == 1 || s.size() <= numRows){
           return s;
         }
-        vector<string>zigzagRow(numRows);
-        int rows = 0;
-        int i = 0;
-        bool direction = true;
+         
+        vector<string>rows(numRows); // like 0, 1, 2 to store a value of the string
+        int row = 0;
+        int  goingDown_bottom = true;
+        for(char ch : s){
+          rows[row] += ch;
 
-        while(i < s.size()){
-          if(direction){
-            while(rows < numRows && i < s.size()){
-              zigzagRow[rows++].push_back(s[i++]);
-            }
-            rows = numRows - 2;
-            direction = false;
+          if(row == 0){
+            goingDown_bottom = true;
           }
-           
+          else if(row == numRows - 1){
+            goingDown_bottom = false; // yha pe bottom se upar jayenge
+          }
+          // now we will update the row based on the condition where we want to according to the direction
 
+          row += goingDown_bottom ? 1 : - 1; // 1 means top -> down and -1 means bottom to top
 
-          else {
-            while(rows >= 0 && i < s.size()){
-              zigzagRow[rows--].push_back(s[i++]);
-            }
-            rows = 1;
-            direction = true;
-          }
-          
-          }
+        }
 
-          string ans = "";
-          
-          for(auto str : zigzagRow){
-            ans += str;
-          }
-           return ans;
+        string ans = "";
+        for(string &it : rows){
+          ans += it;
+        }
+        return ans;
     }
 };
