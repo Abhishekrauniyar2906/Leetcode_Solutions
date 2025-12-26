@@ -1,50 +1,48 @@
 class Solution {
 public:
+    
+    int nums(char ch){
+      if(ch == 'M'){
+        return 1000;
+      }
 
-
-    int nums(char c){
-
-      if(c == 'I'){
+      if(ch == 'I'){
         return 1;
       }
 
-      if(c == 'V'){
-        return 5;
-      }
-
-      if(c == 'X'){
+      if(ch == 'X'){
         return 10;
       }
 
-      if(c == 'L'){
-        return 50;
-      }
-
-      if(c == 'C'){
+      if(ch == 'C'){
         return 100;
       }
 
-      if(c == 'D'){
+      if(ch == 'L'){
+        return 50;
+      }
+
+      if(ch == 'D'){
         return 500;
       }
 
-      if(c == 'M'){
-        return 1000;
+      if(ch == 'V'){
+        return 5;
       }
       return 0;
     }
     int romanToInt(string s) {
+         int sum = 0;
 
-      int sum = 0;
-
-      for(int i = 0; i < s.size(); i++){
-        if(i < s.size() - 1 && nums(s[i]) < nums(s[i + 1])){
-          sum = sum - nums(s[i]);
-        }
-        else{
-          sum = sum + nums(s[i]);
-        }
-      }
-       return sum;
-    }
+         for(int i = 0; i < s.size(); i++){
+           if(i < s.size() - 1 && nums(s[i]) < nums(s[i + 1])){
+            sum = sum - nums(s[i]);
+           }
+           else{
+            sum = sum + nums(s[i]);
+           }
+         
+         }
+        return sum;
+         }
 };
