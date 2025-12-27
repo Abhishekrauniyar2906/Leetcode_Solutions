@@ -1,27 +1,31 @@
 class Solution {
 public:
-
-   int expand(string s, int i, int j){
-    int count = 0;
-
-     while(i >= 0 && j < s.size() && s[i] == s[j]){
-       
-         count++;
-         i--;
-         j++;
-       
-     }
-      
-     return count;
-   }
     int countSubstrings(string s) {
-        int totalcount = 0;
+        int count = 0;
+        int left = 0;
+        int right = 0;
 
-      for(int i = 0; i < s.size(); i++){
-        int oddans = expand(s, i, i);
-        int evenans = expand(s, i, i + 1);
-        totalcount += oddans + evenans;
-      }
-      return totalcount;
+        for(int i = 0; i < s.size(); i++){
+          
+          // for odd indexed;
+          left = i;
+          right = i;
+          while(left >= 0 && right < s.size() && s[left] == s[right]){
+            count++;
+            left--;
+            right++;
+          }
+           
+           // for even indexed
+           left = i;
+          right = i + 1;
+        while(left >= 0 && right < s.size() && s[right] == s[left]){
+           count++;
+            left--;
+            right++;
+        }
+
+        }
+        return count;
     }
 };
