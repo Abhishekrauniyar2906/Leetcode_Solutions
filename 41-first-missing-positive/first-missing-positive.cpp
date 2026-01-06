@@ -2,7 +2,8 @@ class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
       int n = nums.size();
-
+       
+      // why ums[nums[i] - 1] != nums[i] becasue we check if the value 4 is present at random index and we dont know and we check if the value 4, is placed or not index if not then placed into that place
       for(int i = 0; i < nums.size(); i++){
         while(nums[i] > 0 && nums[i] <= n && nums[nums[i] - 1] != nums[i]){
           swap(nums[i], nums[nums[i] - 1]);
