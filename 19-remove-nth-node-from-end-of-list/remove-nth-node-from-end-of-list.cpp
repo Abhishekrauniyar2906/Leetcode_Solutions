@@ -10,27 +10,34 @@
  */
 class Solution {
 public:
+
+    int length(ListNode* head){
+      int c = 0;
+      ListNode* temp = head;
+      while(temp != NULL){
+        c++;
+        temp = temp -> next;
+      }
+      return c;
+    }
     ListNode* removeNthFromEnd(ListNode* head, int n) {
-       ListNode* dummy = new ListNode(0);  // Dummy node to simplify edge cases
-        dummy->next = head;
-        
-        ListNode* first = dummy;
-        ListNode* second = dummy;
-        
-        // Move `first` n+1 steps ahead to create the necessary gap
-        for (int i = 0; i <= n; i++) {
-            first = first->next;
+        int len = length(head);
+
+        int move = len - n;
+
+        if(n == len){
+          return head -> next;
         }
-        
-        // Move both `first` and `second` until `first` reaches the end
-        while (first != nullptr) {
-            first = first->next;
-            second = second->next;
+         ListNode* curr = head;
+        for(int i = 1; i < move; i++){
+          curr = curr -> next;
         }
+
+        ListNode* temp = curr -> next;
+        curr -> next = temp -> next;
         
-        // Remove the nth node from the end
-        second->next = second->next->next;
-        
-        return dummy->next;  
+        delete temp;
+
+        return head;
     }
 };
