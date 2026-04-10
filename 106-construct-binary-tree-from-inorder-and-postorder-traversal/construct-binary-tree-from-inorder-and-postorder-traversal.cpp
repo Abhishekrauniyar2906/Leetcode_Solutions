@@ -1,34 +1,31 @@
 
 class Solution {
 public:
-
-    TreeNode* solve(vector<int>& inorder, vector<int>& postorder, int inStart, int inEnd, int postStart, int postEnd){
-       
-       if(inStart > inEnd) return NULL;
-      TreeNode* root = new TreeNode(postorder[postEnd]);
-      int i = inStart;
-
-      for(; i <= inEnd; i++){
-        if(inorder[i] == root -> val){
-          break;
-        }
-      }
-
-      int leftSize = i - inStart;
-      int rightSize = inEnd - i;
-
-      root -> left = solve(inorder, postorder, inStart, i - 1, postStart, postStart + leftSize - 1);
-      root -> right = solve(inorder, postorder, i + 1, inEnd, postEnd - rightSize, postEnd - 1);
-      return root;
+int index = 0;
+    
+   TreeNode* solve(vector<int> &inorder, vector<int> &postorder, int start, int end){
+    if(start > end) return NULL;
+    int n = inorder.size();
+     int data = postorder[n - index - 1];
+     
+     index++;
+     TreeNode* root = new TreeNode(data);
+     int pos = start;
+     for(int i = start; i <= end; i++){
+         if(inorder[i] == data){
+             pos = i;
+             break;
+         }
+     }
+     root -> right = solve(inorder, postorder, pos + 1, end);
+     root -> left = solve(inorder, postorder, start, pos - 1);
+     
+     return root;
+   }
+    TreeNode* buildTree(vector<int> &inorder, vector<int> &postorder) {
+        // code here
+     return solve(inorder, postorder, 0, inorder.size() - 1);
+     
     }
-    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
-      int n = inorder.size();
-        int inStart = 0;
-        int inEnd = n - 1;
-
-        int postStart = 0;
-        int postEnd = n - 1;
-
-      return solve(inorder, postorder, inStart, inEnd, postStart, postEnd);
-    }
+  
 };
