@@ -1,30 +1,33 @@
 class Solution {
 public:
 
-    void solve(string &digits, string &output, vector<string> &mapping, vector<string>&result, int index){
-    
-    if(index >= digits.size()){
-      result.push_back(output);
-      return;
-    } 
-      
-      string letters = mapping[digits[index] - '0'];
-      for(auto ch : letters){
-        output.push_back(ch);
-        solve(digits, output, mapping, result, index + 1);
-        output.pop_back();
+    void solve(string &digits, vector<string> &mapping, vector<string>&ans, string &output, int index){
+      if(index == digits.size()){
+        ans.push_back(output);
+        return;
       }
 
+      string str = mapping[digits[index] - '0'];
+    //  cout <<"str " << str << endl;
 
+      for(int i = 0; i < str.size(); i++){
+//        cout <<"str[i] " << str[i] << endl;
+        output.push_back(str[i]);
+
+        solve(digits, mapping, ans, output, index + 1);
+        output.pop_back();
+      }
     }
     vector<string> letterCombinations(string digits) {
-      if(digits.empty()) return vector<string>{};
-        vector<string>mapping = {"", "", "abc", "def","ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        vector<string>ans;
 
-        string output;
-        vector<string>result;
+        if(digits.empty()) return ans;
 
-        solve(digits, output, mapping, result, 0);
-        return result;
+        vector<string> mapping = {"", "", "abc" ,"def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
+        string output = "";
+       
+       solve(digits, mapping, ans, output, 0);
+       return ans;
     }
 };
