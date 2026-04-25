@@ -1,22 +1,24 @@
 class Solution {
 public:
-    vector<int> productExceptSelf(vector<int>& nums) {
-      vector<int>ans(nums.size());
+    vector<int> productExceptSelf(vector<int>& arr) {
+      int n = arr.size();
+    vector<int> res(n);
+    res[0] = 1;
 
-      int left = 1;
-      int right = 1;
-
-      for(int i = 0; i < nums.size(); i++){
-        ans[i] = left;
-        left = left * nums[i];
-      }
-
-      for(int j = nums.size() - 1; j >= 0; j--){
-        ans[j] = ans[j] * right;
-        right = right * nums[j];
-      }
-    
-
-    return ans;
+    for(int i = 1; i < n; i++){
+        res[i] = res[i - 1] * arr[i - 1];
+        // cout<<"the res[" << i <<"] :  " << res[i] << endl;
     }
+
+    int right = 1;
+
+    for(int i = n  - 1; i >= 0; i--){
+        res[i] = res[i] * right;
+          // cout<<"the res[" << i <<"] :  " << res[i] << endl;
+        right = right * arr[i];
+    }
+    return res;
+}
+
+   
 };
