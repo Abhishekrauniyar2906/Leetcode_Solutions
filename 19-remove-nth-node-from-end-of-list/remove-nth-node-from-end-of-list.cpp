@@ -1,34 +1,30 @@
 
 class Solution {
 public:
+    int solve(ListNode* head){
+      int c = 0;
+      ListNode* temp = head;
 
-   int countNode(ListNode* head){
-    int c = 0;
-    ListNode* temp = head;
-    while(temp != NULL){
-      c++;
-      temp = temp -> next;
-
+      while(temp != NULL){
+         c++;
+         temp = temp -> next;
+      }
+      return c;
     }
-    return c;
-   }
     ListNode* removeNthFromEnd(ListNode* head, int n) {
-      int len = countNode(head);
-      if(n == len){
-            return head -> next;
-      }
-    ListNode* curr = head;
-      int move = len - n;
-      for(int i = 1; i < move; i++){
-        curr = curr -> next;
-      }
+        if(!head || !head -> next) return NULL;
+        int len = solve(head);
+        if(len == n) return head -> next;
+        int move = len - n;
+          ListNode* temp = head;
+        for(int i = 1;  i < move; i++){
+          temp = temp -> next;
+        }
 
-      ListNode* temp = curr -> next;
-      curr -> next = temp -> next;
-      delete temp;
-      return head;
-      
+        ListNode* deleteNode = temp -> next;
+        temp -> next = deleteNode -> next;
+        deleteNode -> next = NULL;
+        delete deleteNode;
+        return head;
     }
-
-
 };
