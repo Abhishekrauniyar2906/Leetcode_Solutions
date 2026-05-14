@@ -1,23 +1,24 @@
 class Solution {
 public:
-    int solveUsingTopDown(int n){
-      if(n == 0 || n == 1) return n;
-     int prev = 0;
-     int curr = 1;
-      
-      
-     int ans;
+int solve(int n, vector<int>&dp){
+     dp[0] = 0;
+     if(n == 0) return 0;
+     dp[1] = 1;
+     if(n == 1) return 1;
+     
      for(int i = 2; i <= n; i++){
-      ans = prev + curr;
-      prev = curr ;
-      curr = ans;
+        dp[i] = dp[i - 1] + dp[i - 2]; 
      }
-     return ans;
+     return dp[n];
     }
     int fib(int n) {
-       
-        
-        int ans = solveUsingTopDown(n);
-        return ans;
+     
+  
+    
+  
+        // code here
+        vector<int>dp(n + 1, 0);
+        return solve(n, dp);
     }
 };
+    
