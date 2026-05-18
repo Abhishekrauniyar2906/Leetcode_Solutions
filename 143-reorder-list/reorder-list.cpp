@@ -1,59 +1,49 @@
 
 class Solution {
 public:
-   ListNode* middleNode(ListNode* &head){
-    ListNode* slow = head;
-        ListNode* fast = head;
 
-        while (fast != nullptr && fast->next != nullptr) {
-            slow = slow->next;
-            fast = fast->next->next;
-        }
+    ListNode* middleNode(ListNode* head){
+      ListNode* slow = head;
+      ListNode* fast = head;
 
-        return slow;
-   }
+      while(fast != NULL && fast -> next != NULL){
+        slow = slow -> next;
+        fast = fast -> next -> next;
 
-    ListNode* reverse(ListNode* head){
-        ListNode* prev = nullptr;
+      }
+      return slow;
+    }
+       ListNode* reverseList(ListNode* head) {
+        ListNode* prev = NULL;
         ListNode* curr = head;
 
-        while (curr != nullptr) {
-            ListNode* nextNode = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = nextNode;
+        while(curr != NULL){
+          ListNode* nextNode = curr -> next;
+          curr -> next = prev;
+          prev = curr;
+          curr = nextNode;
         }
-
         return prev;
     }
 
-    void merge(ListNode* l1, ListNode* l2) {
-    while (l1 && l2) {
-        ListNode* l1Next = l1->next;
-        ListNode* l2Next = l2->next;
+    ListNode* merge(ListNode* first, ListNode* second){
+      while(second != NULL){
+       ListNode* firstNext = first -> next;
+       ListNode* secondNext = second -> next;
+       first -> next = second;
+       second -> next = firstNext;
+       first = firstNext;
+       second = secondNext;
 
-        l1->next = l2;         // link l1 to l2
-        if (l1Next == nullptr) break;
-        l2->next = l1Next;     // link l2 to next l1
-
-        l1 = l1Next;
-        l2 = l2Next;
-    }
-}
-
-    void reorderList(ListNode* head) {
-        if(head == 0 || head -> next == 0){
-            return;
       }
-         ListNode* midNode = middleNode(head);
-         
-            
-         ListNode* second = reverse(midNode -> next);
-          midNode -> next = NULL;
-
-          
-
-          merge(head, second);
-         
+      return first;
+    }
+    void reorderList(ListNode* head) {
+        if(!head || !head -> next) return;
+        ListNode* middle = middleNode(head);
+        ListNode* revList = reverseList(middle -> next);
+        middle -> next = NULL;
+      
+        merge(head, revList);
     }
 };
