@@ -1,79 +1,61 @@
 class Solution {
 public:
-    
-    
-    int pivotIndex(vector<int>& nums){
-        int n = nums.size();
-       int s = 0;
-        int e = n-1;
-        while(s <= e){
-            int mid = s+(e-s)/2;
-            if(s == e){
-                return s;
-            }
-            if(mid + 1 < n && nums[mid] > nums[mid+1]){
-               return mid;
-            }
-            else if(mid -1 >= 0 && nums[mid] < nums[mid-1]){
-                return mid-1;
-            }
-            else if(nums[s] > nums[mid])
-            {
-                e = mid - 1;
-            }
-            else{
-                 s = mid + 1;
-            }
-        }
-        return -1;
-    }
-    
-    int binarySearch(vector<int>& nums, int s, int e, int target){
 
-     // int n = nums.size();
-        while(s <= e){
-            int mid = s + (e - s) / 2;
-            
-            if(nums[mid] == target){
-                return mid;
-            }
-            else if(nums[mid] < target){
-                s = mid + 1;
-            }
-            else{
-                e = mid - 1;
-            }
+    
+    int pivotIndex(vector<int>&nums, int target){
+      int s = 0;
+      int e = nums.size() - 1;
+
+      while(s <= e){
+        int mid = s + (e - s) / 2;
+
+        if(mid - 1 >= 0  && nums[mid - 1] > nums[mid]){
+          return  mid - 1;
         }
-        return -1;
+        
+        if(mid + 1 < nums.size() && nums[mid] > nums[mid + 1]){
+          return mid;
+        }
+        
+        if(nums[s] > nums[mid]){
+          e = mid - 1;
+        }
+        else{
+          s = mid + 1;
+        }
+      }
+      return -1;
     }
-    
-    
-    
+    int binarySearch(vector<int>&nums, int target, int s, int e){
+      
+      while(s <= e){
+        int mid = s + (e - s) / 2;
+
+        if(nums[mid] == target){
+          return mid;
+        }
+        else if(nums[mid] < target){
+          s = mid + 1;
+        }
+        else{
+           e = mid - 1;
+        }
+      }
+      return -1;
+    }
     int search(vector<int>& nums, int target) {
-   int pivot = pivotIndex(nums);
-        
-        int n = nums.size();
-        int ans = -1;
-        
-         // Check if the array is not rotated (pivot == -1)
-         if (pivot == -1) 
-         {
-            return binarySearch(nums, 0, n - 1, target);
+        int pivot = pivotIndex(nums, target);
+
+        if(pivot == -1){
+          return binarySearch(nums, target, 0, nums.size() - 1);
         }
 
-        
-//         Search in Part A
-        
-        if(target >=nums[0] && target <= nums[pivot])
-        {
-            ans = binarySearch(nums, 0, pivot, target);
+        if(target >= nums[0] && target <= nums[pivot]){
+          return binarySearch(nums, target, 0, pivot);
         }
-//         Search in part B
-        else
-        {
-           ans = binarySearch(nums, pivot+1, n-1, target);
+        else{
+          return binarySearch(nums, target, pivot + 1, nums.size() - 1);
         }
-                         
-        return ans;
+        return -1;
     }
 };
