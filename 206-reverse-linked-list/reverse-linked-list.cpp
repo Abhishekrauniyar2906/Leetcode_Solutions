@@ -6,10 +6,10 @@ public:
         ListNode* curr = head;
 
         while(curr != NULL){
-          ListNode* nextNode = curr -> next;
+          ListNode* newNode = curr -> next;
           curr -> next = prev;
           prev = curr;
-          curr = nextNode;
+          curr = newNode;
         }
         return prev;
     }
