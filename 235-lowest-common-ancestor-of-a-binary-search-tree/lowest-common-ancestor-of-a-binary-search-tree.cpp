@@ -9,10 +9,10 @@ public:
 
 
         if(p -> val > root -> val && q -> val > root -> val){
-         root = lowestCommonAncestor(root -> right, p, q);
+         return lowestCommonAncestor(root -> right, p, q);
         }
         else if(p -> val < root -> val && q -> val < root -> val){
-          root = lowestCommonAncestor(root -> left, p, q);
+          return lowestCommonAncestor(root -> left, p, q);
         }
         return root;
     }
