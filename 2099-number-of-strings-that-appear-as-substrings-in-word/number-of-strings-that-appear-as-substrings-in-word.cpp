@@ -1,22 +1,21 @@
 class Solution {
 public:
 
-   bool solve(string ch, string word){
+  //  bool solve(string ch, string word){
     
-    if(word.find(ch) != string::npos){
-      return true;
-    }
-    return false;
-   }
+  //   if(word.find(ch) != string::npos){
+  //     return true;
+  //   }
+  //   return false;
+  //  }
     int numOfStrings(vector<string>& patterns, string word) {
-      int sum = 0, count = 0;
-
-      for(auto ch : patterns){
-        if(solve(ch, word)){
-          count = 1;
+      int sum = 0, count = 1;
+       
+       for(auto x : patterns){
+         if(word.find(x) != string::npos){
           sum += count;
-        }
-      }   
-      return sum;
+         }
+       }
+       return sum;
     }
 };
