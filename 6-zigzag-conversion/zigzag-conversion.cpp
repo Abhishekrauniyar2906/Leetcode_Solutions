@@ -1,31 +1,27 @@
 class Solution {
 public:
     string convert(string s, int numRows) {
-      if(numRows > s.size()) return s;
-       
-       if(numRows == 1) return s;
+        if(s.size() < numRows) return s;
+        if(numRows == 1) return s;
+
         vector<string>ans(numRows);
-        string res = "";
         int row = 0;
-        bool isgoingDown = true;
-
+       bool dir = true;
         for(auto ch : s){
-           ans[row] += ch;
+            ans[row] += ch;
 
-           if(row == 0){
-            isgoingDown = true;
-           }
+            if(row == 0){
+                dir = true; 
+            }
 
-           if(row == numRows - 1){
-             isgoingDown = false;
-           }
-
-           row += isgoingDown == true ? 1 : -1;
-           
+            if(row == numRows - 1){
+                dir = false;
+            }
+            row += (dir == true) ? 1 : -1;
         }
-        
-        for(auto x : ans){
-          res += x;
+        string res = "";
+        for(auto i : ans){
+            res += i;
         }
         return res;
     }
