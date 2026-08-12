@@ -2,18 +2,20 @@
 class Solution {
 public:
     ListNode* oddEvenList(ListNode* head) {
-      if(!head || !head -> next) return head;
-        ListNode* odd = head;
-        ListNode* even = head -> next;
-        ListNode* connect = even;
-        
-        while(even != NULL && even -> next != NULL){
-          odd -> next = even -> next;
-          odd = odd -> next;
-          even -> next = odd -> next;
-          even = even -> next;
+        if(!head || !head -> next) return head;
+        ListNode* first = head;
+        ListNode* second = head -> next;
+        ListNode* joinNode = second;
+
+        while(second != NULL  && second -> next != NULL){
+            first -> next = second -> next;
+            first = first -> next;
+            second -> next = first -> next;
+            second = second -> next;
+
         }
-        odd -> next = connect;
+
+        first -> next = joinNode;
         return head;
     }
 };
