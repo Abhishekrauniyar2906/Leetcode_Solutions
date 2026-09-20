@@ -2,32 +2,32 @@
 class Solution {
 public:
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
-      vector<vector<int>>ans;
-        if(!root) return ans;
-
+        vector<vector<int>>ans;
+        if(!root)return ans;
         queue<TreeNode*>q;
         q.push(root);
-         
-        bool dir = true;
+
+        int index = 0;
+        bool direction = true;
         while(!q.empty()){
-          int len =q.size();
-          vector<int>level(len);
-          for(int i = 0; i < len; i++){
-            TreeNode* frontdata = q.front();
-            q.pop();
-            int index = dir == true ? i : len - i - 1;
-            level[index] = frontdata -> val;
+            int len = q.size();
+            vector<int>res(len);
+            for(int i = 0; i < len; i++){
+                TreeNode* front = q.front();
+                q.pop();
+                index = direction == true ? i : len - i - 1;
+                res[index] = front -> val;
 
-            if(frontdata -> left){
-              q.push(frontdata -> left);
-            }
+                if(front -> left){
+                    q.push(front -> left);
+                }
 
-            if(frontdata -> right){
-              q.push(frontdata -> right);
+                if(front -> right){
+                    q.push(front -> right);
+                }
             }
-          }
-          dir = !dir;
-          ans.push_back(level);
+            direction = !direction;
+            ans.push_back(res);
         }
         return ans;
     }
