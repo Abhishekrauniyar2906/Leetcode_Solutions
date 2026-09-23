@@ -1,33 +1,22 @@
 class Solution {
 public:
-    int trap(vector<int>& arr) {
-        int left = 0;
-        int right = arr.size() - 1;
-        int left_max = INT_MIN;
-        int right_max = INT_MIN;
-        int sum = 0;
+    int trap(vector<int>& height) {
+      int n = height.size();
+      vector<int>prefix(n), suffix(n);
+      prefix[0] = height[0];
+      suffix[n - 1] = height[n - 1];
 
-        while(left < right){
-          if(arr[left] <= arr[right]){
-            if(arr[left] >= left_max){
-              left_max = arr[left];
-            }
-            else{
-              sum += left_max - arr[left];
-            }
-            left++;
-          }
-          else{
-            if(arr[right] >= right_max){
-              right_max = arr[right];
-            }
-            else{
-              sum += right_max - arr[right];
-            }
-              right--;
-          }
-        
-        }
-        return sum;
+      for(int i = 1; i < n; i++){
+        prefix[i] = max(prefix[i - 1], height[i]);
+      }
+
+      for(int i = n - 2; i >= 0; i--){
+        suffix[i] = max(suffix[i + 1], height[i]);
+      }
+     int sum = 0;
+      for(int i = 0; i < n; i++){
+        sum += min(prefix[i], suffix[i]) - height[i];
+      }
+      return sum;
     }
 };
