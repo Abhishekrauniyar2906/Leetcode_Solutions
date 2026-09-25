@@ -1,36 +1,33 @@
 
 class Solution {
 public:
-   class Compare{
-    public:
-    bool operator()(ListNode* a, ListNode* b){
-        return a -> val > b -> val;
-    }
-   };
+   
+    struct Compare{
+        bool operator()(ListNode* a, ListNode* b){
+            return a -> val > b -> val;
+        }
+    };
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-       
-        priority_queue<ListNode*, vector<ListNode*>, Compare> pq;
+     priority_queue<ListNode*, vector<ListNode*>, Compare>minHeap;
 
-        for(auto list : lists){
-            if(list){
-                pq.push(list);
-            }
+     for(auto list : lists){
+        if(list){
+            minHeap.push(list);
         }
-         ListNode* dummy = new ListNode(-1);
-         ListNode* ans = dummy;
-        while(!pq.empty()){
-           ListNode* topNode = pq.top();
-           pq.pop();
+     }
+      ListNode* dummyNode = new ListNode(-1);
+      ListNode* ans = dummyNode;
+     while(!minHeap.empty()){
+        ListNode* topNode = minHeap.top();
+        minHeap.pop();
 
-           ans -> next = topNode;
-           ans = ans -> next;
-          
-
-           if(topNode -> next != NULL){
-            pq.push(topNode -> next);
-           }
-
-        }
-        return dummy -> next;
+        ans -> next = topNode;
+        ans = ans -> next;
+        if(topNode -> next != NULL)
+        minHeap.push(topNode -> next);
+     
+      
+     }
+     return dummyNode -> next;
     }
 };
